@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YoutubeAPI TEST</title>
+</head>
+<body>
+    <div id="ytplayer"></div>
+<input type="text" id="url" style="width: 600px">
+
+<script>
+
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api";
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  let player;
+  function onYouTubePlayerAPIReady() {
+    player = new YT.Player('ytplayer', {
+      height: '360',
+      width: '640',
+    });
+  }
+  const url = document.getElementById('url');
+  let videoId;
+  
+  url.addEventListener('input', () => {
+
+    videoId = url.value.split('v=')[1];
+
+    if (videoId) {
+      const ampersandPosition = videoId.indexOf('&');
+      if(ampersandPosition != -1) {
+          videoId = videoId.substring(0, ampersandPosition);
+      }
+    }
+    player.cueVideoById({videoId: videoId});
+});
+
+</script>
+</body>
+</html>
